@@ -6,13 +6,16 @@ import axios from 'axios';
 const recaptchaSiteKey = '6Lc5RkopAAAAAJyU9J-X6gYJ2n_RAtsA32gZS0As';
 // DOM Constants
 const wrapperId = 'tpg-form-wrapper';
+const wrapper = document.querySelector(`[data-title="${wrapperId}"]`);
 const wrapperClass = 'tpg-form-wrapper';
 
-const Env = document.querySelector(`[testing="${wrapperId}"]`);
+const Env = wrapper.getAttribute('testing');
 
 
 // API Constants
 const BASE_URL = Env && Env === 'true' ?  'https://staging-rest.unclekam.com/api/public' : 'https://rest.unclekam.com/api/public';
+
+
 const leadsEndpoint = `${BASE_URL}/generate-lead`;
 const servicesEndpoint = `${BASE_URL}/get-services`;
 // Annual incomes list
@@ -71,7 +74,6 @@ const selectedAnnualIncome = [];
 let isAgreementChecked = false;
 
 // References
-const wrapper = document.querySelector(`[data-title="${wrapperId}"]`);
 const headElement = document.querySelector('head');
 const redirect_to = wrapper.getAttribute('data-redirect-url'); 
 const pro_id = wrapper.getAttribute('pro-id');
