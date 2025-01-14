@@ -113,7 +113,8 @@
 }
 
 .tpg-form-wrapper__input-wrapper label {
-	color: #13056b;
+	display: block !important;
+	color: #13056b !important;
 	font-size: 14px;
 	font-weight: 600 !important;
 }
@@ -144,20 +145,20 @@
 }
 
 .tpg-form-wrapper__input-wrapper input {
-	width: 100%;
-	padding: 10px;
-	border: 1px solid #4b57e7;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	outline-color: #4b57e7;
-	height: 45px;
-	margin-top: 10px;
+    width: 100% !important;
+    padding: 10px !important;
+    border: 1px solid #4b57e7 !important;
+    -webkit-border-radius: 5px !important;
+    -moz-border-radius: 5px;
+    border-radius: 5px !important;
+    outline-color: #4b57e7 !important;
+    height: 45px !important;
+    margin-top: 6px !important;
 }
 
 .tpg-form-wrapper__input-wrapper--error input {
-	border-color: #dc3545;
-	outline-color: #dc3545;
+	border-color: #dc3545 !important;
+	outline-color: #dc3545 !important;
 }
 
 .tpg-form-wrapper__input-wrapper input::-webkit-input-placeholder {
@@ -192,29 +193,30 @@
 
 .tpg-form-wrapper__checkbox-item label,
 .tpg-form-wrapper__radio-item label {
-	padding-left: 10px;
-	color: #13056b;
-	font-weight: bold;
+	padding-left: 10px !important;
+	color: #13056b !important;
+	font-weight: 600;
 }
 
 .tpg-form-wrapper__submit-button {
-	width: 100%;
-	max-width: 250px;
-	display: block;
-	margin-top: 16px;
-	padding: 15px 20px;
-	background-color: #4b57e7;
-	-webkit-border-radius: 6px;
-	-moz-border-radius: 6px;
-	border-radius: 6px;
-	color: #fff;
-	border: none;
-	font-weight: bold;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	border-radius: 5px;
-	cursor: pointer;
-	font-size: 20px;
+    width: 100%;
+    max-width: 250px;
+    display: block;
+    margin-top: 16px;
+    padding: 15px 20px !important;
+    background-color: #4b57e7 !important;
+    -webkit-border-radius: 6px !important;
+    -moz-border-radius: 6px !important;
+    border-radius: 6px !important;
+    color: #fff !important;
+    border: none !important;
+    font-weight: bold !important;
+    -webkit-border-radius: 5px !important;
+    -moz-border-radius: 5px !important;
+    border-radius: 5px !important;
+    cursor: pointer !important;
+    text-align: center !important;
+    font-size: 20px;
 }
 
 .tpg-form-wrapper__submit-button:disabled {
@@ -222,7 +224,8 @@
 }
 
 .tpg-form-wrapper__submit-button:hover {
-	background-color: #404dd7;
+	background-color: #404dd7 !important;
+	opacity: 0.9 !important;
 }
 
 .tpg-form-wrapper__submit-button:disabled:hover {
