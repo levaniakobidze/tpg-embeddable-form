@@ -125,6 +125,10 @@ if (wrapper) {
 				form
 			);
 
+			// create label
+			createElement('label', [{ name: 'for', value: field.name }], [], inputWrapper).innerHTML =
+				field.label;
+				
 			// Create input
 			const input = createElement(
 				'input',
@@ -203,10 +207,9 @@ if (wrapper) {
 				});
 			}
 
-			// Create label for input
-			createElement('label', [{ name: 'for', value: field.name }], [], inputWrapper).innerHTML =
-				field.label;
-		});
+		
+			
+});
 
 		createElement(
 			'hr',
