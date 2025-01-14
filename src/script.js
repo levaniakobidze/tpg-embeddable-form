@@ -554,7 +554,7 @@ window.formSubmitHandler = (token) => {
 			// Reset recaptcha
 			grecaptcha.reset();
 			if (!redirect_to) {
-				return 	window.location.href = `https://unclekam.com/thankyou?uuid=${data?.data?.data?.lead_uuid}&appointment=${data?.data?.data?.allow_appointments}`;
+				return 	window.location.href = `https://app.unclekam.com/thankyou?uuid=${data?.data?.data?.lead_uuid}&appointment=${data?.data?.data?.allow_appointments}`;
 			}
 			// Redirect to given url if needed
 			if (redirect_to) {
