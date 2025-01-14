@@ -11,6 +11,12 @@ const wrapperClass = 'tpg-form-wrapper';
 
 const Env = wrapper.getAttribute('testing');
 
+window.onRecaptchaSubmit = function (token) {
+    window.formSubmitHandler(token);
+};
+
+console.log(typeof onRecaptchaSubmit,'recaptcha');
+
 
 // API Constants
 const BASE_URL = Env && Env === 'true' ?  'https://staging-rest.unclekam.com/api/public' : 'https://rest.unclekam.com/api/public';
@@ -128,7 +134,6 @@ if (wrapper) {
 			// create label
 			createElement('label', [{ name: 'for', value: field.name }], [], inputWrapper).innerHTML =
 				field.label;
-				
 			// Create input
 			const input = createElement(
 				'input',
