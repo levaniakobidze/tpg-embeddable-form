@@ -2,9 +2,17 @@ import IMask from 'imask';
 import axios from 'axios';
 
 
+// Google recaptcha site key
+const recaptchaSiteKey = '6Lc5RkopAAAAAJyU9J-X6gYJ2n_RAtsA32gZS0As';
+// DOM Constants
+const wrapperId = 'tpg-form-wrapper';
+const wrapperClass = 'tpg-form-wrapper';
+
+const Env = document.querySelector(`[testing="${wrapperId}"]`);
+
 
 // API Constants
-const BASE_URL = 'https://staging-rest.unclekam.com/api/public';
+const BASE_URL = Env && Env === 'true' ?  'https://staging-rest.unclekam.com/api/public' : 'https://rest.unclekam.com/api/public';
 const leadsEndpoint = `${BASE_URL}/generate-lead`;
 const servicesEndpoint = `${BASE_URL}/get-services`;
 // Annual incomes list
@@ -15,11 +23,7 @@ const annualIncomes = [
 	{ id: 4, name: '$250,000-$499,999' },
 	{ id: 5, name: '$500,000+' },
 ];
-// Google recaptcha site key
-const recaptchaSiteKey = '6Lc5RkopAAAAAJyU9J-X6gYJ2n_RAtsA32gZS0As';
-// DOM Constants
-const wrapperId = 'tpg-form-wrapper';
-const wrapperClass = 'tpg-form-wrapper';
+
 const formFields = [
 	{
 		type: 'text',
