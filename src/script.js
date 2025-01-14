@@ -12,10 +12,9 @@ const wrapperClass = 'tpg-form-wrapper';
 const Env = wrapper.getAttribute('testing');
 
 window.onRecaptchaSubmit = function (token) {
-    window.formSubmitHandler(token);
+    formSubmitHandler(token);
 };
 
-console.log(typeof onRecaptchaSubmit,'recaptcha');
 
 
 // API Constants
@@ -93,33 +92,43 @@ if (wrapper) {
 	(async () => {
 		// Generate form inside wrapper
 		const form = createElement(
-			'form',
-			[{ name: 'class', value: `${wrapperClass}__form` }],
-			[
-				{
-					type: 'submit',
-					listener: async (event) => {
-						event.preventDefault();
-						// Execute google recaptcha
-						grecaptcha.execute();
-					},
-				},
-				{
-					type: 'input',
-					listener: (event) => {
-						// Check if all fields are valid
-						const isValid = formFields.every((field) => field.isValid);
-						// Enable submit button if all fields are valid
-						if (isValid && isAgreementChecked) {
-							event.currentTarget.querySelector('input[type="submit"]').disabled = false;
-						} else {
-							event.currentTarget.querySelector('input[type="submit"]').disabled = true;
-						}
-					},
-				},
-			],
-			wrapper
-		);
+      "form",
+      [{ name: "class", value: `${wrapperClass}__form` }],
+      [
+        {
+          type: "submit",
+          listener: async (event) => {
+            event.preventDefault();
+            grecaptcha
+              .execute(recaptchaSiteKey, { action: "submit" })
+              .then((token) => {
+                window.onRecaptchaSubmit(token);
+              })
+              .catch((error) => {
+                console.error("Error executing reCAPTCHA:", error);
+              });
+          },
+        },
+        {
+          type: "input",
+          listener: (event) => {
+            // Check if all fields are valid
+            const isValid = formFields.every((field) => field.isValid);
+            // Enable submit button if all fields are valid
+            if (isValid && isAgreementChecked) {
+              event.currentTarget.querySelector(
+                'input[type="submit"]'
+              ).disabled = false;
+            } else {
+              event.currentTarget.querySelector(
+                'input[type="submit"]'
+              ).disabled = true;
+            }
+          },
+        },
+      ],
+      wrapper
+    );
 
 		// Generate form fields
 		formFields.forEach((field) => {
