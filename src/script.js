@@ -563,9 +563,9 @@ window.formSubmitHandler = (token) => {
 			grecaptcha.reset();
 			if (!redirect_to) {
 				return data?.data?.data?.allow_appointments ?
-				window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com/' : 'https://app.unclekam.com'}/book-appointment?lead=${data?.data?.data?.lead_uuid}&customer=${data?.data?.data?.user_uuid}&operator=${data?.data?.data?.userpro_uuid}`
+				window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/book-appointment?lead=${data?.data?.data?.lead_uuid}&customer=${data?.data?.data?.user_uuid}&operator=${data?.data?.data?.userpro_uuid}`
 				:
-				window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com/' : 'https://app.unclekam.com'}https://app.unclekam.com/thankyou?uuid=${data?.data?.data?.lead_uuid}&appointment=false` 
+				window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/thankyou?uuid=${data?.data?.data?.lead_uuid}&appointment=false` 
 			}
 			// Redirect to given url if needed
 			if (redirect_to) {
