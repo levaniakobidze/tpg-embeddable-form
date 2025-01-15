@@ -8,6 +8,8 @@ const recaptchaSiteKey = '6Lc5RkopAAAAAJyU9J-X6gYJ2n_RAtsA32gZS0As';
 const wrapperId = 'tpg-form-wrapper';
 const wrapper = document.querySelector(`[data-title="${wrapperId}"]`);
 const wrapperClass = 'tpg-form-wrapper';
+const urlParams = new URLSearchParams(window.location.search);
+
 
 const Env = wrapper.getAttribute('testing');
 
@@ -37,7 +39,7 @@ const formFields = [
 		type: 'text',
 		name: 'firstname',
 		label: 'First Name',
-		value: '',
+		value: urlParams.has('firstname') ? urlParams.get('firstname') : '' ,
 		mask: /^[a-zA-Z ]+$/,
 		isValid: true,
 	},
@@ -45,7 +47,7 @@ const formFields = [
 		type: 'text',
 		name: 'lastname',
 		label: 'Last Name',
-		value: '',
+		value: urlParams.has('lastname') ? urlParams.get('lastname') : '' ,
 		mask: /^[a-zA-Z ]+$/,
 		isValid: true,
 	},
@@ -53,7 +55,7 @@ const formFields = [
 		type: 'email',
 		name: 'email',
 		label: 'Email Address',
-		value: '',
+		value: urlParams.has('email') ? urlParams.get('email') : '' ,
 		mask: /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}/,
 		isValid: true,
 	},
@@ -61,15 +63,15 @@ const formFields = [
 		type: 'text',
 		name: 'phone',
 		label: 'Phone Number',
-		value: '',
+		value: urlParams.has('phone') ? urlParams.get('phone') : '' ,
 		mask: '(000) 000-0000',
 		isValid: true,
 	},
 	{
 		type: 'text',
-		name: 'zipcode',
+		name: 'zip',
 		label: 'Zip Code',
-		value: '',
+		value: urlParams.has('zip') ? urlParams.get('zip') : '' ,
 		mask: '00000000',
 		isValid: true,
 	},
@@ -153,6 +155,10 @@ if (wrapper) {
 						name: 'required',
 						value: true,
 					},
+					{
+						name:'value',
+						value: urlParams.has(field?.name) ? urlParams.get(field?.name) : '' 
+					}
 				],
 				[
 					{
@@ -186,7 +192,7 @@ if (wrapper) {
 					const value = mask.value;
 					field.value = value;
 					if (value !== '') {
-						if (field.name !== 'zipcode') {
+						if (field.name !== 'zip') {
 							field.isValid = false;
 							inputWrapper.classList.add(`${wrapperClass}__input-wrapper--error`);
 						} else {
@@ -204,7 +210,7 @@ if (wrapper) {
 					}
 				});
 				mask.on('complete', () => {
-					if (field.name !== 'zipcode') {
+					if (field.name !== 'zip') {
 						field.isValid = true;
 						inputWrapper.classList.remove(`${wrapperClass}__input-wrapper--error`);
 					}
