@@ -433,17 +433,18 @@ const bottomCont = createElement(
     [
         { name: 'class', value: `${wrapperClass}__bottom-container` },
         { name: 'id', value: `${wrapperClass}__bottom-container` },
+		{ name: 'style', value: 'display: flex; flex-direction: column; gap: 10px; width: 100%;' },
     ],
     [],
     form
 );
 
- createElement(
-    'div',
+createElement(
+	'div',
     [
-        { name: 'class', value: `${wrapperClass}__alert-message` },
+		{ name: 'class', value: `${wrapperClass}__alert-message` },
         { name: 'id', value: `${wrapperClass}__alert-message` },
-        { name: 'style', value: 'display: none;' },
+		{ name: 'style', value: 'display: none; padding: 10px; font-size: 14px; border-radius: 5px;' },
     ],
     [],
     bottomCont
