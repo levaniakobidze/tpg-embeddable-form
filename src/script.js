@@ -13,10 +13,9 @@ const urlParams = new URLSearchParams(window.location.search);
 
 const Env = wrapper.getAttribute('testing');
 
-window.onRecaptchaSubmit = function (token) {
-    formSubmitHandler(token);
-};
-
+// window.onRecaptchaSubmit = function (token) {
+//     formSubmitHandler(token);
+// };
 
 
 // API Constants
@@ -102,7 +101,9 @@ if (wrapper) {
 					listener: async (event) => {
 						event.preventDefault();
 						// Execute google recaptcha
-						grecaptcha.execute();
+						// grecaptcha.execute();
+						formSubmitHandler()
+						window.hand
 					},
 				},
 				{
@@ -426,6 +427,28 @@ if (wrapper) {
   Message frequency varies; Message and data rates may apply.
 `;
 
+
+const bottomCont = createElement(
+    'div',
+    [
+        { name: 'class', value: `${wrapperClass}__bottom-container` },
+        { name: 'id', value: `${wrapperClass}__bottom-container` },
+    ],
+    [],
+    form
+);
+
+ createElement(
+    'div',
+    [
+        { name: 'class', value: `${wrapperClass}__alert-message` },
+        { name: 'id', value: `${wrapperClass}__alert-message` },
+        { name: 'style', value: 'display: none;' },
+    ],
+    [],
+    bottomCont
+);
+
 		// Generate submit button
 		createElement(
 			'input',
@@ -448,54 +471,54 @@ if (wrapper) {
 				},
 			],
 			[],
-			form
+			bottomCont
 		);
 
 		// Generate google recaptcha script and append to head
-		createElement(
-			'script',
-			[
-				{
-					name: 'src',
-					value: `https://www.google.com/recaptcha/api.js?&render=${recaptchaSiteKey}`,
-				},
-				{
-					name: 'async',
-					value: '',
-				},
-				{
-					name: 'defer',
-					value: '',
-				},
-			],
-			[],
-			headElement
-		);
+		// createElement(
+		// 	'script',
+		// 	[
+		// 		{
+		// 			name: 'src',
+		// 			value: `https://www.google.com/recaptcha/api.js?&render=${recaptchaSiteKey}`,
+		// 		},
+		// 		{
+		// 			name: 'async',
+		// 			value: '',
+		// 		},
+		// 		{
+		// 			name: 'defer',
+		// 			value: '',
+		// 		},
+		// 	],
+		// 	[],
+		// 	headElement
+		// );
 
 		// Generate google recaptcha widget and append to form
-		createElement(
-			'div',
-			[
-				{
-					name: 'class',
-					value: `g-recaptcha ${wrapperClass}__recaptcha`,
-				},
-				{
-					name: 'data-sitekey',
-					value: recaptchaSiteKey,
-				},
-				{
-					name: 'data-size',
-					value: 'invisible',
-				},
-				{
-					name: 'data-callback',
-					value: 'onRecaptchaSubmit',
-				},
-			],
-			[],
-			form
-		);
+		// createElement(
+		// 	'div',
+		// 	[
+		// 		{
+		// 			name: 'class',
+		// 			value: `g-recaptcha ${wrapperClass}__recaptcha`,
+		// 		},
+		// 		{
+		// 			name: 'data-sitekey',
+		// 			value: recaptchaSiteKey,
+		// 		},
+		// 		{
+		// 			name: 'data-size',
+		// 			value: 'invisible',
+		// 		},
+		// 		{
+		// 			name: 'data-callback',
+		// 			value: 'onRecaptchaSubmit',
+		// 		},
+		// 	],
+		// 	[],
+		// 	form
+		// );
 	})();
 }
 
@@ -524,58 +547,119 @@ async function getServices() {
 }
 
 // Function that handles form submition after recaptcha is completed
-window.formSubmitHandler = (token) => {
-	// Create lead object
-	const lead = {};
-	// Add form fields to lead
-	formFields.forEach((field) => {
-		lead[field.name] = field.value;
-	});
-	// Remove special characters from phone number
-	lead.phone = lead.phone.split(/[ ()-]/).join('');
-	// Add selected options to lead
-	lead.options = selectedOptions;
-	// Add selected annual income to lead
-	lead.income = selectedAnnualIncome;
-	// Set timezone
-	lead.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-	// Add pro number to lead if exists
-	// if (TPG_FORM_CONFIG.pro_number) {
-	// 	lead.taxpro_number = TPG_FORM_CONFIG.pro_number;
-	// }
-	// Add recaptcha token to lead object
-	lead.recaptcha_token = token;
+// window.formSubmitHandler = () => {
+// 	// Create lead object
+// 	const lead = {};
+// 	// Add form fields to lead
+// 	formFields.forEach((field) => {
+// 		lead[field.name] = field.value;
+// 	});
+// 	// Remove special characters from phone number
+// 	lead.phone = lead.phone.split(/[ ()-]/).join('');
+// 	// Add selected options to lead
+// 	lead.options = selectedOptions;
+// 	// Add selected annual income to lead
+// 	lead.income = selectedAnnualIncome;
+// 	// Set timezone
+// 	lead.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+// 	// Add pro number to lead if exists
+// 	// if (TPG_FORM_CONFIG.pro_number) {
+// 	// 	lead.taxpro_number = TPG_FORM_CONFIG.pro_number;
+// 	// }
+// 	// Add recaptcha token to lead object
+// 	// lead.recaptcha_token = token;
 
-	// Select the submit button and update its state
-	const submitButton = document.querySelector(`.${wrapperClass}__submit-button`);
-	submitButton.disabled = true;
-	submitButton.value = "Loading...";
+// 	// Select the submit button and update its state
+// 	const submitButton = document.querySelector(`.${wrapperClass}__submit-button`);
+// 	submitButton.disabled = true;
+// 	submitButton.value = "Loading...";
 
-	// Send lead to API
-	axios
-		.post(leadsEndpoint, lead, {
-			params:{pro_id: pro_id || null }	
-		})
-		.then((data) => {
-			console.log(data,'dataa');
+// 	// Send lead to API
+// 	axios
+// 		.post(leadsEndpoint, lead, {
+// 			params:{pro_id: pro_id || null }	
+// 		})
+// 		.then((data) => {
+// 			console.log(data,'dataa');
 			
-			// Reset recaptcha
-			grecaptcha.reset();
+// 			// Reset recaptcha
+// 			grecaptcha.reset();
+// 			// if (!redirect_to) {
+// 			// 	return data?.data?.data?.allow_appointments ?
+// 			// 	window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/book-appointment?lead=${data?.data?.data?.lead_uuid}&customer=${data?.data?.data?.user_uuid}&operator=${data?.data?.data?.userpro_uuid}`
+// 			// 	:
+// 			// 	window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/thankyou?uuid=${data?.data?.data?.lead_uuid}&appointment=false` 
+// 			// }
+// 			// Redirect to given url if needed
+// 			if (redirect_to) {
+// 				window.location.href = redirect_to;
+// 			}
+// 		})
+// 		.catch((error) => {
+// 			console.error(error);
+// 			// Revert button state on error
+// 			submitButton.disabled = false;
+// 			submitButton.value = "Get started today";
+// 		});
+// };
+
+window.formSubmitHandler = () => {
+    // Create lead object
+    const lead = {};
+    // Add form fields to lead
+    formFields.forEach((field) => {
+        lead[field.name] = field.value;
+    });
+    // Remove special characters from phone number
+    lead.phone = lead.phone.split(/[ ()-]/).join('');
+    // Add selected options to lead
+    lead.options = selectedOptions;
+    // Add selected annual income to lead
+    lead.income = selectedAnnualIncome;
+    // Set timezone
+    lead.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    const submitButton = document.querySelector(`.${wrapperClass}__submit-button`);
+    const alertMessage = document.getElementById(`${wrapperClass}__alert-message`);
+
+    alertMessage.style.display = 'none';
+    alertMessage.innerHTML = '';
+
+    submitButton.disabled = true;
+    submitButton.value = "Loading...";
+
+    axios
+        .post(leadsEndpoint, lead, {
+            params: { pro_id: pro_id || null }
+        })
+        .then((data) => {
+            alertMessage.style.display = 'block';
+            alertMessage.innerHTML = data?.data?.data?.message || "Your information was successfully submitted!";
+		   alertMessage.style.color = "green";
+		   alertMessage.style.backgroundColor = '#e0ffec'
+		   alertMessage.style.border = '1px solid green'
+
 			if (!redirect_to) {
 				return data?.data?.data?.allow_appointments ?
 				window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/book-appointment?lead=${data?.data?.data?.lead_uuid}&customer=${data?.data?.data?.user_uuid}&operator=${data?.data?.data?.userpro_uuid}`
 				:
 				window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/thankyou?uuid=${data?.data?.data?.lead_uuid}&appointment=false` 
 			}
-			// Redirect to given url if needed
-			if (redirect_to) {
-				window.location.href = redirect_to;
-			}
-		})
-		.catch((error) => {
-			console.error(error);
-			// Revert button state on error
-			submitButton.disabled = false;
-			submitButton.value = "Get started today";
-		});
+
+            // Redirect if needed
+            if (redirect_to) {
+                window.location.href = redirect_to;
+            }
+        })
+        .catch((error) => {
+            alertMessage.style.display = 'block';
+            alertMessage.innerHTML = error?.response?.data?.message || "Something went wrong. Please try again.";
+            alertMessage.style.color = "#fd5e6d";
+			alertMessage.style.backgroundColor = '#f9d6da'
+			alertMessage.style.border = '1px solid #fd5e6d'
+
+            // Revert button state
+            submitButton.disabled = false;
+            submitButton.value = "Get started today";
+        });
 };

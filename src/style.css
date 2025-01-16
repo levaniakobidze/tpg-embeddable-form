@@ -263,3 +263,17 @@
 		width: 100%;
 	}
 }
+
+.tpg-form-wrapper__alert-message {
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+}
+
+
+.tpg-form-wrapper__bottom-container{
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	width: 100%;
+}
