@@ -83,6 +83,8 @@ let isAgreementChecked = false;
 const headElement = document.querySelector('head');
 const redirect_to = wrapper.getAttribute('data-redirect-url'); 
 const pro_id = wrapper.getAttribute('pro-id');
+const data_source = wrapper.getAttribute('data-source');
+
 
 // Clean wrapper
 wrapper.innerHTML = '';
@@ -547,63 +549,6 @@ async function getServices() {
 	return response.data;
 }
 
-// Function that handles form submition after recaptcha is completed
-// window.formSubmitHandler = () => {
-// 	// Create lead object
-// 	const lead = {};
-// 	// Add form fields to lead
-// 	formFields.forEach((field) => {
-// 		lead[field.name] = field.value;
-// 	});
-// 	// Remove special characters from phone number
-// 	lead.phone = lead.phone.split(/[ ()-]/).join('');
-// 	// Add selected options to lead
-// 	lead.options = selectedOptions;
-// 	// Add selected annual income to lead
-// 	lead.income = selectedAnnualIncome;
-// 	// Set timezone
-// 	lead.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-// 	// Add pro number to lead if exists
-// 	// if (TPG_FORM_CONFIG.pro_number) {
-// 	// 	lead.taxpro_number = TPG_FORM_CONFIG.pro_number;
-// 	// }
-// 	// Add recaptcha token to lead object
-// 	// lead.recaptcha_token = token;
-
-// 	// Select the submit button and update its state
-// 	const submitButton = document.querySelector(`.${wrapperClass}__submit-button`);
-// 	submitButton.disabled = true;
-// 	submitButton.value = "Loading...";
-
-// 	// Send lead to API
-// 	axios
-// 		.post(leadsEndpoint, lead, {
-// 			params:{pro_id: pro_id || null }	
-// 		})
-// 		.then((data) => {
-// 			console.log(data,'dataa');
-			
-// 			// Reset recaptcha
-// 			grecaptcha.reset();
-// 			// if (!redirect_to) {
-// 			// 	return data?.data?.data?.allow_appointments ?
-// 			// 	window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/book-appointment?lead=${data?.data?.data?.lead_uuid}&customer=${data?.data?.data?.user_uuid}&operator=${data?.data?.data?.userpro_uuid}`
-// 			// 	:
-// 			// 	window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/thankyou?uuid=${data?.data?.data?.lead_uuid}&appointment=false` 
-// 			// }
-// 			// Redirect to given url if needed
-// 			if (redirect_to) {
-// 				window.location.href = redirect_to;
-// 			}
-// 		})
-// 		.catch((error) => {
-// 			console.error(error);
-// 			// Revert button state on error
-// 			submitButton.disabled = false;
-// 			submitButton.value = "Get started today";
-// 		});
-// };
-
 window.formSubmitHandler = () => {
     // Create lead object
     const lead = {};
@@ -620,6 +565,10 @@ window.formSubmitHandler = () => {
     // Set timezone
     lead.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
+	if(data_source){
+		lead.data_source = data_source
+	}
+
     const submitButton = document.querySelector(`.${wrapperClass}__submit-button`);
     const alertMessage = document.getElementById(`${wrapperClass}__alert-message`);
 
@@ -631,7 +580,7 @@ window.formSubmitHandler = () => {
 
     axios
         .post(leadsEndpoint, lead, {
-            params: { pro_id: pro_id || null }
+            params: { pro_id: pro_id || null, data_source: data_source || '' }
         })
         .then((data) => {
             alertMessage.style.display = 'block';
