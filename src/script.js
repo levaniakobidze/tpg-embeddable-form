@@ -17,6 +17,7 @@ const Env = wrapper.getAttribute('testing') || urlParams.has('qa_mode');
 //     formSubmitHandler(token);
 // };
 
+console.log('Test Mode', Env);
 
 // API Constants
 const BASE_URL = Env && Env === 'true' ?  'https://staging-rest.unclekam.com/api/public' : 'https://rest.unclekam.com/api/public';
