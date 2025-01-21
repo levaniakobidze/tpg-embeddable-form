@@ -11,17 +11,18 @@ const wrapperClass = 'tpg-form-wrapper';
 const urlParams = new URLSearchParams(window.location.search);
 
 
-const Env = wrapper.getAttribute('testing');
+const Env = wrapper.getAttribute('testing') || urlParams.has('qa_mode');
 
 // window.onRecaptchaSubmit = function (token) {
 //     formSubmitHandler(token);
 // };
 
+console.log('Test Mode: ', Env);
 
 
 // API Constants
-const BASE_URL = Env && Env === 'true' ?  'https://staging-rest.unclekam.com/api/public' : 'https://rest.unclekam.com/api/public';
-
+const BASE_URL = Env && Env === true ?  'https://staging-rest.unclekam.com/api/public' : 'https://rest.unclekam.com/api/public';
+// console.log('Base URL: ', BASE_URL);
 
 const leadsEndpoint = `${BASE_URL}/generate-lead`;
 const servicesEndpoint = `${BASE_URL}/get-services`;
