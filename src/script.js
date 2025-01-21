@@ -600,13 +600,13 @@ window.formSubmitHandler = async () => {
         alertMessage.style.backgroundColor = '#e0ffec';
         alertMessage.style.border = '1px solid green';
 
-		fbq('track', 'Lead');
+		fbq('track', 'Lead Registered');
 
         if (!redirect_to) {
             return data?.data?.data?.allow_appointments ?
-            window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/book-appointment?lead=${data?.data?.data?.lead_uuid}&customer=${data?.data?.data?.user_uuid}&operator=${data?.data?.data?.userpro_uuid}`
+            window.location.href = `${Env && Env === true ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/book-appointment?lead=${data?.data?.data?.lead_uuid}&customer=${data?.data?.data?.user_uuid}&operator=${data?.data?.data?.userpro_uuid}`
             :
-            window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/thankyou?uuid=${data?.data?.data?.lead_uuid}&appointment=false`;
+            window.location.href = `${Env && Env === true ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/thankyou?uuid=${data?.data?.data?.lead_uuid}&appointment=false`;
         }
 
         if (redirect_to) {
