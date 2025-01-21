@@ -586,9 +586,11 @@ window.formSubmitHandler = () => {
         .then((data) => {
             alertMessage.style.display = 'block';
             alertMessage.innerHTML = data?.data?.data?.message || "Your information was successfully submitted!";
-		   alertMessage.style.color = "green";
-		   alertMessage.style.backgroundColor = '#e0ffec'
-		   alertMessage.style.border = '1px solid green'
+		   	alertMessage.style.color = "green";
+		   	alertMessage.style.backgroundColor = '#e0ffec'
+		   	alertMessage.style.border = '1px solid green'
+
+		   	fbq('track', 'Lead');
 
 			if (!redirect_to) {
 				return data?.data?.data?.allow_appointments ?
