@@ -600,7 +600,7 @@ window.formSubmitHandler = async () => {
         alertMessage.style.backgroundColor = '#e0ffec';
         alertMessage.style.border = '1px solid green';
 
-		fbq('track', 'Lead Registered');
+		fbq('track', 'Lead');
 
         if (!redirect_to) {
             return data?.data?.data?.allow_appointments ?
