@@ -18,6 +18,7 @@ const Env = wrapper.getAttribute('testing');
 // };
 
 
+
 // API Constants
 const BASE_URL = Env && Env === 'true' ?  'https://staging-rest.unclekam.com/api/public' : 'https://rest.unclekam.com/api/public';
 
@@ -549,13 +550,22 @@ async function getServices() {
 	return response.data;
 }
 
-window.formSubmitHandler = () => {
+window.formSubmitHandler = async () => {
     // Create lead object
     const lead = {};
     // Add form fields to lead
     formFields.forEach((field) => {
         lead[field.name] = field.value;
     });
+
+    // Get Public IP
+    try {
+        const response = await axios.get('https://api.ipify.org?format=json');
+        lead.clientIp = response.data.ip || null;
+    } catch (error) {
+        lead.clientIp = null; // Handle cases where the IP fetch fails
+    }
+
     // Remove special characters from phone number
     lead.phone = lead.phone.split(/[ ()-]/).join('');
     // Add selected options to lead
@@ -565,9 +575,9 @@ window.formSubmitHandler = () => {
     // Set timezone
     lead.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
-	if(data_source){
-		lead.data_source = data_source
-	}
+    if (data_source) {
+        lead.data_source = data_source;
+    }
 
     const submitButton = document.querySelector(`.${wrapperClass}__submit-button`);
     const alertMessage = document.getElementById(`${wrapperClass}__alert-message`);
@@ -578,38 +588,36 @@ window.formSubmitHandler = () => {
     submitButton.disabled = true;
     submitButton.value = "Loading...";
 
-    axios
-        .post(leadsEndpoint, lead, {
+    try {
+        const data = await axios.post(leadsEndpoint, lead, {
             params: { pro_id: pro_id || null, data_source: data_source || '' }
-        })
-        .then((data) => {
-            alertMessage.style.display = 'block';
-            alertMessage.innerHTML = data?.data?.data?.message || "Your information was successfully submitted!";
-		   alertMessage.style.color = "green";
-		   alertMessage.style.backgroundColor = '#e0ffec'
-		   alertMessage.style.border = '1px solid green'
-
-			if (!redirect_to) {
-				return data?.data?.data?.allow_appointments ?
-				window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/book-appointment?lead=${data?.data?.data?.lead_uuid}&customer=${data?.data?.data?.user_uuid}&operator=${data?.data?.data?.userpro_uuid}`
-				:
-				window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/thankyou?uuid=${data?.data?.data?.lead_uuid}&appointment=false` 
-			}
-
-            // Redirect if needed
-            if (redirect_to) {
-                window.location.href = redirect_to;
-            }
-        })
-        .catch((error) => {
-            alertMessage.style.display = 'block';
-            alertMessage.innerHTML = error?.response?.data?.message || "Something went wrong. Please try again.";
-            alertMessage.style.color = "#fd5e6d";
-			alertMessage.style.backgroundColor = '#f9d6da'
-			alertMessage.style.border = '1px solid #fd5e6d'
-
-            // Revert button state
-            submitButton.disabled = false;
-            submitButton.value = "Get started today";
         });
+
+        alertMessage.style.display = 'block';
+        alertMessage.innerHTML = data?.data?.data?.message || "Your information was successfully submitted!";
+        alertMessage.style.color = "green";
+        alertMessage.style.backgroundColor = '#e0ffec';
+        alertMessage.style.border = '1px solid green';
+
+        if (!redirect_to) {
+            return data?.data?.data?.allow_appointments ?
+            window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/book-appointment?lead=${data?.data?.data?.lead_uuid}&customer=${data?.data?.data?.user_uuid}&operator=${data?.data?.data?.userpro_uuid}`
+            :
+            window.location.href = `${Env && Env === 'true' ? 'https://staging.unclekam.com' : 'https://app.unclekam.com'}/thankyou?uuid=${data?.data?.data?.lead_uuid}&appointment=false`;
+        }
+
+        if (redirect_to) {
+            window.location.href = redirect_to;
+        }
+    } catch (error) {
+        alertMessage.style.display = 'block';
+        alertMessage.innerHTML = error?.response?.data?.message || "Something went wrong. Please try again.";
+        alertMessage.style.color = "#fd5e6d";
+        alertMessage.style.backgroundColor = '#f9d6da';
+        alertMessage.style.border = '1px solid #fd5e6d';
+    } finally {
+        // Revert button state
+        submitButton.disabled = false;
+        submitButton.value = "Get started today";
+    }
 };
