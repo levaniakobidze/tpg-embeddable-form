@@ -5,8 +5,10 @@ export default defineConfig({
   build: {
     minify: false, // Disable minification
     rollupOptions: {
+
       input: {
         // Entry points for HTML and additional JS files
+        index: path.resolve(__dirname, './index.html'), // Additional JS entry
         script: path.resolve(__dirname, 'src/script.js'), // Additional JS entry
         orderForm: path.resolve(__dirname, 'src/order-form.js'), // Additional JS entry
         style: path.resolve(__dirname, 'src/style.css'), // Additional JS entry

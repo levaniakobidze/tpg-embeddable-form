@@ -20,9 +20,6 @@ async function renameFiles() {
         jsFile = file;
         let newJsName;
 
-        // Define new file names based on specific conditions
-        console.log(file,'filey');
-        
         if (file === 'orderForm.js') {
           newJsName = `order-form.js`;
         } else if (file === 'twoStepOrderForm.js') {
@@ -31,17 +28,14 @@ async function renameFiles() {
           newJsName = `${customFileName}.js`;
         } else {
           console.warn(`No renaming rule for file: ${file}`);
-          continue; // Skip files that don't match any rule
         }
 
         await fs.rename(
           path.join(distDirectory, file),
           path.join(distDirectory, newJsName)
         );
-        console.log(`Renamed ${file} to ${newJsName}`);
       } else if (ext === '.css') {
         cssFile = file;
-        // const newCssName = `${customFileName}.css`;
             console.log(file,'ffff');
           let newCssName;  
           
@@ -53,7 +47,7 @@ async function renameFiles() {
             newCssName = `${customFileName}.css`;
           } else {
             console.warn(`No renaming rule for file: ${file}`);
-            continue; // Skip files that don't match any rule
+            continue; 
           }
         await fs.rename(
           path.join(distDirectory, file),
@@ -76,7 +70,16 @@ async function renameFiles() {
       if (jsFile) {
         $('script[src]').each((_, el) => {
           if ($(el).attr('src').includes(jsFile)) {
-            $(el).attr('src', `/${customFileName}.js`);
+
+            if (jsFile === 'orderForm.js') {
+             $(el).attr('src', `/${`order-form.js`}.js`);
+              } else if (jsFile === 'twoStepOrderForm.js') {
+                $(el).attr('src', `/${`two-step-order-form.js`}.js`);
+              } else if (jsFile === 'script.js') {
+                $(el).attr('src', `/${'script'}.js`);
+              } else {
+                console.warn(`No renaming rule for file: ${file}`);
+              }
             console.log(`Updated script tag to /${customFileName}.js`);
           }
         });
