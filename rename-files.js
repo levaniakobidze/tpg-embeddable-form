@@ -2,21 +2,38 @@ import fs from 'fs-extra';
 import path from 'path';
 import * as cheerio from 'cheerio';
 
-const distDirectory = './dist'; 
-const customFileName = 'tpg-form'; 
+const distDirectory = './dist';
+const customFileName = 'tpg-form';
 
 async function renameFiles() {
   try {
     const files = await fs.readdir(distDirectory);
 
+    console.log(files, 'Files found in dist directory');
+
     let jsFile = null;
     let cssFile = null;
 
     for (const file of files) {
-      const ext = path.extname(file); 
+      const ext = path.extname(file);
       if (ext === '.js') {
         jsFile = file;
-        const newJsName = `${customFileName}.js`;
+        let newJsName;
+
+        // Define new file names based on specific conditions
+        console.log(file,'filey');
+        
+        if (file === 'orderForm.js') {
+          newJsName = `order-form.js`;
+        } else if (file === 'twoStepOrderForm.js') {
+          newJsName = `two-step-order-form.js`;
+        } else if (file === 'script.js') {
+          newJsName = `${customFileName}.js`;
+        } else {
+          console.warn(`No renaming rule for file: ${file}`);
+          continue; // Skip files that don't match any rule
+        }
+
         await fs.rename(
           path.join(distDirectory, file),
           path.join(distDirectory, newJsName)
@@ -24,7 +41,20 @@ async function renameFiles() {
         console.log(`Renamed ${file} to ${newJsName}`);
       } else if (ext === '.css') {
         cssFile = file;
-        const newCssName = `${customFileName}.css`;
+        // const newCssName = `${customFileName}.css`;
+            console.log(file,'ffff');
+          let newCssName;  
+          
+        if (file === 'orderFormStyles.css') {
+            newCssName = `order-form.css`;
+          } else if (file === 'twoStepOrderFormStyles.css') {
+            newCssName = `two-step-order-form.css`;
+          } else if (file === 'style.css') {
+            newCssName = `${customFileName}.css`;
+          } else {
+            console.warn(`No renaming rule for file: ${file}`);
+            continue; // Skip files that don't match any rule
+          }
         await fs.rename(
           path.join(distDirectory, file),
           path.join(distDirectory, newCssName)
