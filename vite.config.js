@@ -3,29 +3,24 @@ import path from 'path';
 
 export default defineConfig({
   build: {
-    minify: false, // Disable minification
+    minify: false,
     rollupOptions: {
-
       input: {
-        // Entry points for HTML and additional JS files
-        index: path.resolve(__dirname, './index.html'), // Additional JS entry
-        script: path.resolve(__dirname, 'src/script.js'), // Additional JS entry
-        orderForm: path.resolve(__dirname, 'src/order-form.js'), // Additional JS entry
-        style: path.resolve(__dirname, 'src/style.css'), // Additional JS entry
-        orderFormStyles: path.resolve(__dirname, 'src/order-form.css'), // Additional JS entry
-        twoStepOrderFormStyles: path.resolve(__dirname, 'src/two-step-order-form.css'), // Additional JS entry
-        twoStepOrderForm: path.resolve(__dirname, 'src/two-step-order-form.js'), // Additional JS entry
-
-
-
+        index: path.resolve(__dirname, './index.html'),
+        script: path.resolve(__dirname, 'src/script.js'),
+        orderForm: path.resolve(__dirname, 'src/order-form.js'),
+        style: path.resolve(__dirname, 'src/style.css'),
+        orderFormStyles: path.resolve(__dirname, 'src/order-form.css'),
+        twoStepOrderFormStyles: path.resolve(__dirname, 'src/two-step-order-form.css'),
+        twoStepOrderForm: path.resolve(__dirname, 'src/two-step-order-form.js'),
       },
-      external: ["https://www.google.com/recaptcha/api.js"], // External dependencies
+      external: ["https://www.google.com/recaptcha/api.js"],
       output: {
-        assetFileNames: '[name][extname]', // Custom asset names
-        entryFileNames: '[name].js',      // Output JS files as [name].js
-        chunkFileNames: '[name]-[hash].js', // Name dynamically imported chunks
+        assetFileNames: '[name][extname]',
+        entryFileNames: '[name].js',
+        chunkFileNames: '[name]-[hash].js',
       },
     },
-    outDir: 'dist', // Output directory
+    outDir: 'dist',
   },
 });
